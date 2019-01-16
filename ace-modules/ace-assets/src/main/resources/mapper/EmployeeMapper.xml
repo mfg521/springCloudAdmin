@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mfg.asset.mapper.EmployeeMapper">
+
+	<update id="changeEmpByDrop" parameterType="Employee">
+		update employee set xindex=#{xindex},yindex=#{yindex},block_id=#{blockId} where employee_uuid=#{employeeUuid}
+	</update>
+
+	<select id="getEmpByBlockId" resultType="Employee" parameterType="Block">
+		select * from employee where block_id=#{id}  and xIndex >=0 and yIndex>=0  order by block_id,xindex,yindex ;
+	</select>
+</mapper>
+
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mfg.asset.mapper.RoomMapper">
+    <select id="findById" resultType="com.mfg.asset.entity.Room" parameterType="com.mfg.asset.entity.Room">
+		select * from room where  room_num=#{roomNum} ;
+	</select>
+
+    <!--
+        查询房间将其对应的Block也查出来
+        private
+
+
+
+    -->
+
+    <resultMap id="MyRoom" type="com.mfg.asset.entity.Room">
+        <id column="room_id" property="roomId"></id>
+        <result column="r_room_num" property="roomNum"></result>
+        <result column="r_floor" property="floor"></result>
+
+        <collection property="block" ofType="com.mfg.asset.entity.Block">
+            <id column="id" property="id"></id>
+            <result column="mleft" property="mleft"></result>
+            <result column="mtop" property="mtop"></result>
+            <result column="mwidth" property="mwidth"></result>
+            <result column="mheight" property="mheight"></result>
+            <result column="interval_width" property="intervalWidth"></result>
+            <result column="interval_height" property="intervalHeight"></result>
+            <result column="line_num" property="lineNum"></result>
+            <result column="total_size" property="totalSize"></result>
+            <result column="b_room_num" property="roomNum"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="getRoomBlockByRoomNum" parameterType="com.mfg.asset.entity.Room" resultMap="MyRoom ">
+		select r.room_id,r.room_num r_room_num,r.floor r_floor,
+		       b.id,b.mtop,b.mleft,b.mwidth,b.mheight,
+		       b.interval_width,b.interval_height,b.line_num,b.total_size,b.room_num b_room_num
+		 from room r left join block b
+		 on r.room_num=b.room_num
+		 where r.room_num=#{roomNum};
+	</select>
+
+</mapper>
+
+

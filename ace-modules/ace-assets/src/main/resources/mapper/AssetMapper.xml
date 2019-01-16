@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mfg.asset.mapper.AssetMapper">
+
+    <select id="getShenChaVo" resultType="ShenChaVo">
+		select computer_model,a.asset_type,a.serial_number,a.tagger_number,finance_code,beijing_code,employee_name,floor,room_num,borrowed_date from asset a, record r,employee e where a.serial_number=r.serial_number and r.employee_uuid=e.employee_uuid and a.serial_number=#{serialNumber};
+	</select>
+
+</mapper>
